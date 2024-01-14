@@ -136,7 +136,7 @@
         "tag": "cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/cn.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/mixed/cn.srs",
         "download_detour": "proxy"
       },
       {
