@@ -36,7 +36,6 @@
         "server": "fakeip"
       },
       {
-        "geosite": "geolocation-!cn",
         "query_type": [
           "A",
           "AAAA"
@@ -45,7 +44,7 @@
         "rewrite_ttl": 1
       },
       {
-        "geosite": "cn",
+        "rule_set": "cn",
         "server": "tx"
       }
     ],
