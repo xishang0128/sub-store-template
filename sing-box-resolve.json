@@ -75,7 +75,10 @@
         "outbound": "bilibili"
       },
       {
-        "rule_set": "netflix",
+        "rule_set": [
+          "geoip-netflix",
+          "geosite-netflix"
+        ],
         "outbound": "netflix"
       },
       {
@@ -91,19 +94,31 @@
         "outbound": "openai"
       },
       {
-        "rule_set": "google",
+        "rule_set": [
+          "geoip-google",
+          "geosite-google"
+        ],
         "outbound": "google"
       },
       {
-        "rule_set": "apple",
+        "rule_set": [
+          "geoip-apple",
+          "geosite-apple"
+        ],
         "outbound": "apple"
       },
       {
-        "rule_set": "telegram",
+        "rule_set": [
+          "geoip-telegram",
+          "geosite-telegram"
+        ],
         "outbound": "telegram"
       },
       {
-        "rule_set": "cn",
+        "rule_set": [
+          "geoip-cn",
+          "geosite-cn"
+        ],
         "outbound": "cn"
       },
       {
@@ -120,10 +135,17 @@
     ],
     "rule_set": [
       {
-        "tag": "apple",
+        "tag": "geoip-apple",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/apple.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/heoip/apple.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geosite-apple",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/apple.srs",
         "download_detour": "proxy"
       },
       {
@@ -137,21 +159,35 @@
         "tag": "bilibili",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/bilibili.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/bilibili.srs",
         "download_detour": "proxy"
       },
       {
-        "tag": "cn",
+        "tag": "geoip-cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/cn.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs",
         "download_detour": "proxy"
       },
       {
-        "tag": "google",
+        "tag": "geosite-cn",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/google.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/cn.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geoip-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geoip/google.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geosite-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/google.srs",
         "download_detour": "proxy"
       },
       {
@@ -162,10 +198,17 @@
         "download_detour": "proxy"
       },
       {
-        "tag": "netflix",
+        "tag": "geoip-netflix",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/netflix.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geoip/netflix.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geosite-netflix",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/netflix.srs",
         "download_detour": "proxy"
       },
       {
@@ -176,10 +219,17 @@
         "download_detour": "proxy"
       },
       {
-        "tag": "telegram",
+        "tag": "geoip-telegram",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/mixed/telegram.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geoip/telegram.srs",
+        "download_detour": "proxy"
+      },
+      {
+        "tag": "geosite-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geosite/telegram.srs",
         "download_detour": "proxy"
       },
       {
