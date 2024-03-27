@@ -138,7 +138,7 @@
         "tag": "geoip-apple",
         "type": "remote",
         "format": "binary",
-        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/heoip/apple.srs",
+        "url": "https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo-lite/geoip/apple.srs",
         "download_detour": "proxy"
       },
       {
