@@ -1,0 +1,363 @@
+proxy-providers:
+  provider_01:
+    type: http
+    interval: 1800
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 🎯 全球直连
+    url: "订阅链接"
+global-ua: clash.meta
+
+mode: rule
+mixed-port: 7890
+socks-port: 7891
+port: 7892
+redir-port: 0
+tproxy-port: 0
+allow-lan: false
+unified-delay: false
+tcp-concurrent: false
+log-level: info
+find-process-mode: strict
+bind-address: "*"
+lan-allowed-ips:
+  - 0.0.0.0/0
+  - ::/0
+lan-disallowed-ips: []
+authentication: []
+skip-auth-prefixes:
+  - 127.0.0.1/32
+
+hosts: {}
+
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat"
+  geosite: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country-lite.mmdb"
+  asn: "https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/GeoLite2-ASN.mmdb"
+
+external-controller: ""
+secret: ""
+external-ui: ui
+external-ui-url: https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+
+global-client-fingerprint: chrome
+keep-alive-idle: 600
+keep-alive-interval: 30
+profile:
+  store-selected: true
+  store-fake-ip: true
+sniffer:
+  enable: true
+  parse-pure-ip: true
+  force-dns-mapping: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 443
+      override-destination: false
+    TLS:
+      ports:
+        - 443
+    QUIC:
+      ports:
+        - 443
+  force-domain: []
+  skip-domain:
+    - +.push.apple.com
+tun:
+  enable: true
+  device: Mihomo
+  stack: mixed
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+  mtu: 1500
+  strict-route: true
+  route-exclude-address: []
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: redir-host
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "*"
+    - +.lan
+    - +.local
+    - time.*.com
+    - ntp.*.com
+    - +.market.xiaomi.com
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - tls://dns.google:853
+    - https://cloudflare-dns.com/dns-query
+    - https://doh.dns.sb/dns-query
+  nameserver:
+    - tls://dns.google:853
+    - https://223.5.5.5/dns-query
+  nameserver-policy:
+    geosite:private,CN:
+      - 223.5.5.5
+      - 119.29.29.29
+    geosite:geolocation-!cn:
+      - https://dns.cloudflare.com/dns-query
+      - https://dns.google/dns-query
+  respect-rules: false
+  use-hosts: false
+  use-system-hosts: false
+  fallback: []
+  fallback-filter: {}
+  direct-nameserver:
+    - system
+
+# 锚点，用于后续引用替换
+prgen: &prgen
+  type: select
+  proxies:
+    - 🔰 节点选择
+    - ♻️ 自动选择
+    - 🇺🇲 美国节点
+    - 🚀 手动切换
+    - 🎯 全球直连
+
+prrejt: &prrejt
+  type: select
+  proxies:
+    - 🛑 全球拦截
+    - 🎯 全球直连
+
+prdire: &prdire
+  type: select
+  proxies:
+    - 🎯 全球直连
+    - 🔰 节点选择
+    - 🇺🇲 美国节点
+    - 🚀 手动切换
+
+prnf: &prnf
+  type: select
+  proxies:
+    - 🎥 奈飞节点
+    - 🔰 节点选择
+    - ♻️ 自动选择
+    - 🇺🇲 美国节点
+    - 🚀 手动切换
+    - 🎯 全球直连
+proxy-groups:
+  - name: 🔰 节点选择
+    type: select
+    proxies:
+      - ♻️ 自动选择
+      - 🇺🇲 美国节点
+      - 🚀 手动切换
+      - DIRECT
+  - name: 🚀 手动切换
+    type: select
+    include-all: true
+  - name: 🇺🇲 美国节点
+    type: select
+    include-all: true
+    filter: (?i)美|美国|usa|united\s?states|🇺🇸
+  - name: 🎥 奈飞节点
+    type: select
+    include-all: true
+    filter: (?i)NF|奈飞|Netflix|NETFLIX|Media
+  - name: ♻️ 自动选择
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: ^((?!(直连)).)*$
+  - name: 🍀 Google
+    !!merge <<: *prgen
+  - name: 👨🏿‍💻 GitHub
+    !!merge <<: *prgen
+  - name: 📲 电报消息
+    !!merge <<: *prgen
+  - name: 💬 OpenAi
+    !!merge <<: *prgen
+  - name: 🎥 奈飞视频
+    !!merge <<: *prnf
+  - name: 📺 哔哩哔哩
+    !!merge <<: *prdire
+  - name: 🌍 国外媒体
+    !!merge <<: *prgen
+  - name: 🌏 国内媒体
+    !!merge <<: *prdire
+  - name: 📢 谷歌FCM
+    !!merge <<: *prdire
+  - name: Ⓜ️ 微软Bing
+    !!merge <<: *prdire
+  - name: Ⓜ️ 微软云盘
+    !!merge <<: *prdire
+  - name: Ⓜ️ 微软服务
+    !!merge <<: *prdire
+  - name: 🍎 苹果服务
+    !!merge <<: *prdire
+  - name: 🎮 游戏平台
+    !!merge <<: *prdire
+  - name: 🎶 网易音乐
+    !!merge <<: *prdire
+  - name: 🎯 全球直连
+    type: select
+    proxies:
+      - DIRECT
+      - 🔰 节点选择
+      - ♻️ 自动选择
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 🍃 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: 🐟 漏网之鱼
+    !!merge <<: *prgen
+
+rules:
+  - GEOIP,lan,🎯 全球直连,no-resolve
+  - GEOSITE,category-ads-all,🛑 广告拦截
+  - GEOSITE,private,🎯 全球直连
+  - RULE-SET,localNet,🎯 全球直连
+  - GEOSITE,apple-cn,🍎 苹果服务
+  - RULE-SET,epic,🎮 游戏平台
+  - RULE-SET,origin,🎮 游戏平台
+  - RULE-SET,sony,🎮 游戏平台
+  - RULE-SET,steamCN,🎯 全球直连
+  - DOMAIN-SUFFIX,steamcommunity.com,🔰 节点选择
+  - RULE-SET,steam,🎮 游戏平台
+  - RULE-SET,banProgramAD,🍃 应用净化
+  - RULE-SET,bing,Ⓜ️ 微软Bing
+  - RULE-SET,oneDrive,Ⓜ️ 微软云盘
+  - RULE-SET,microsoft,Ⓜ️ 微软服务
+  - GEOSITE,bilibili,📺 哔哩哔哩
+  - RULE-SET,biliHMT,📺 哔哩哔哩
+  - RULE-SET,bili,📺 哔哩哔哩
+  - RULE-SET,chinaMedia,🌏 国内媒体
+  - GEOSITE,netflix,🎥 奈飞视频
+  - RULE-SET,proxyMedia,🌍 国外媒体
+  - RULE-SET,proxyGFWlist,🔰 节点选择
+  - GEOSITE,github,👨🏿‍💻 GitHub
+  - GEOSITE,google,🍀 Google
+  - GEOSITE,googlefcm,📢 谷歌FCM
+  - GEOSITE,telegram,📲 电报消息
+  - RULE-SET,googleCN,🎯 全球直连
+  - RULE-SET,chinaIp,🎯 全球直连
+  - RULE-SET,chinaDomain,🎯 全球直连
+  - RULE-SET,chinaCompanyIp,🎯 全球直连
+  - RULE-SET,download,🎯 全球直连
+  - GEOSITE,CN,🎯 全球直连
+  - GEOSITE,geolocation-!cn,🐟 漏网之鱼
+
+  - GEOIP,private,DIRECT,no-resolve
+  - GEOIP,google,🍀 Google
+  - GEOIP,netflix,🎥 奈飞视频
+  - GEOIP,telegram,📲 电报消息
+  - GEOIP,CN,🎯 全球直连
+  - MATCH,🐟 漏网之鱼
+
+rule-anchor:
+  ripcidr: &ripcidr
+    type: http
+    interval: 86400
+    behavior: ipcidr
+    format: mrs
+  rdomain: &rdomain
+    type: http
+    interval: 86400
+    behavior: domain
+    format: mrs
+  rclsc: &rclsc
+    type: http
+    interval: 86400
+    behavior: classical
+    format: text
+rule-providers:
+  localNet:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/LocalAreaNetwork.list
+  epic:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Epic.list
+  origin:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Origin.list
+  sony:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Sony.list
+  steam:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Steam.list
+  nintendo:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Nintendo.list
+  neteaseMusic:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/NetEaseMusic.list
+  chinaMedia:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaMedia.list
+  youtube:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/YouTube.list
+  netflix:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Netflix.list
+  banProgramAD:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/BanProgramAD.list
+  bing:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Bing.list
+  oneDrive:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/OneDrive.list
+  microsoft:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Microsoft.list
+  proxyGFWlist:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyGFWlist.list
+  proxyMedia:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ProxyMedia.list
+  biliHMT:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/BilibiliHMT.list
+  bili:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Bilibili.list
+  googleCN:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/GoogleCN.list
+  steamCN:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/SteamCN.list
+  chinaIp:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaIp.list
+  chinaDomain:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaDomain.list
+  chinaCompanyIp:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/ChinaCompanyIp.list
+  download:
+    !!merge <<: *rclsc
+    url: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Download.list
