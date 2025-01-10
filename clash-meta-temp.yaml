@@ -131,6 +131,7 @@ prgen: &prgen
     - ♻️ 自动选择
     - 🇺🇲 美国节点
     - 🚀 手动切换
+    - 🆓节点-NoSafe
     - 🎯 全球直连
 
 prrejt: &prrejt
@@ -162,6 +163,7 @@ proxy-groups:
     proxies:
       - ♻️ 自动选择
       - 🇺🇲 美国节点
+      - 🆓节点-NoSafe
       - 🚀 手动切换
       - DIRECT
   - name: 🚀 手动切换
@@ -171,6 +173,11 @@ proxy-groups:
     type: select
     include-all: true
     filter: (?i)美|美国|usa|united\s?states|🇺🇸
+    exclude-filter: (?i)free
+  - name: 🆓节点-NoSafe
+    type: select
+    include-all: true
+    filter: (?i)free
   - name: 🎥 奈飞节点
     type: select
     include-all: true
