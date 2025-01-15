@@ -13,7 +13,7 @@
       },
       {
         "tag": "tx",
-        "address": "https://120.53.53.53/dns-query",
+        "address": "https://1.12.12.12/dns-query",
         "detour": "direct"
       },
       {
