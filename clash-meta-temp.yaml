@@ -173,11 +173,11 @@ proxy-groups:
     type: select
     include-all: true
     filter: (?i)美|美国|usa|united\s?states|🇺🇸
-    exclude-filter: (?i)free
+    exclude-filter: (?i)free$
   - name: 🆓节点-NoSafe
     type: select
     include-all: true
-    filter: (?i)free
+    filter: (?i)free$
   - name: 🎥 奈飞节点
     type: select
     include-all: true
