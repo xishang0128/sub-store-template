@@ -141,6 +141,7 @@
               "cn_domain",
               "apple_domain",
               "google_domain",
+              "spotify_domain",
               "telegram_domain",
               "netflix_domain"
             ]
@@ -151,6 +152,13 @@
       },
       {
         "action": "resolve"
+      },
+      {
+        "rule_set": [
+          "spotify_domain"
+        ],
+        "action": "route",
+        "outbound": "spotify"
       },
       {
         "rule_set": [
@@ -278,6 +286,13 @@
         "download_detour": "direct"
       },
       {
+        "tag": "spotify_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/spotify.srs",
+        "download_detour": "direct"
+      },
+      {
         "tag": "telegram_domain",
         "type": "remote",
         "format": "binary",
@@ -357,6 +372,27 @@
         "all-auto"
       ],
       "default": "direct"
+    },
+    {
+      "tag": "spotify",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "us-auto",
+        "all",
+        "all-auto"
+      ],
+      "default": "proxy"
     },
     {
       "tag": "telegram",
