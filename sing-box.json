@@ -1,33 +1,25 @@
 {
   "dns": {
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    },
     "servers": [
       {
         "tag": "google",
-        "address": "https://8.8.8.8/dns-query",
+        "type": "https",
+        "server": "8.8.8.8",
         "detour": "proxy"
       },
       {
         "tag": "ali",
-        "address": "https://223.5.5.5/dns-query",
-        "detour": "direct"
+        "type": "https",
+        "server": "223.5.5.5"
       },
       {
         "tag": "fakeip",
-        "address": "fakeip"
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
     "rules": [
-      {
-        "outbound": "any",
-        "action": "route",
-        "server": "ali",
-        "disable_cache": true
-      },
       {
         "clash_mode": "Direct",
         "action": "route",
@@ -61,6 +53,9 @@
     "independent_cache": true
   },
   "route": {
+    "default_domain_resolver": {
+      "server": "ali"
+    },
     "rules": [
       {
         "action": "sniff",
