@@ -96,6 +96,16 @@
         "outbound": "direct"
       },
       {
+        "rule_set": "av_domian",
+        "action": "route",
+        "outbound": "av_domian"
+      },
+      {
+        "rule_set": "jav_domian",
+        "action": "route",
+        "outbound": "jav_domian"
+      },
+      {
         "rule_set": "bilibili_domain",
         "action": "route",
         "outbound": "bilibili"
@@ -181,6 +191,20 @@
       }
     ],
     "rule_set": [
+      {
+        "tag": "av_domian",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/gr294949/sing-box-rule-converter/refs/heads/main/outputs/geosite-av.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "jav_domian",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/gr294949/sing-box-rule-converter/refs/heads/main/outputs/geosite-jav.srs",
+        "download_detour": "direct"
+      },
       {
         "tag": "apple_ip",
         "type": "remote",
@@ -310,6 +334,48 @@
         "direct"
       ],
       "default": "all-auto"
+    },
+    {
+      "tag": "av_domian",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "us-auto",
+        "all",
+        "all-auto"
+      ],
+      "default": "jp-auto"
+    },
+    {
+      "tag": "jav_domian",
+      "type": "selector",
+      "outbounds": [
+        "proxy",
+        "direct",
+        "hk",
+        "hk-auto",
+        "tw",
+        "tw-auto",
+        "jp",
+        "jp-auto",
+        "sg",
+        "sg-auto",
+        "us",
+        "us-auto",
+        "all",
+        "all-auto"
+      ],
+      "default": "hk-auto"
     },
     {
       "tag": "google",
@@ -519,7 +585,7 @@
         "all",
         "all-auto"
       ],
-      "default": "proxy"
+      "default": "direct"
     },
     {
       "tag": "hk",
@@ -618,7 +684,7 @@
         "all",
         "all-auto"
       ],
-      "default": "direct"
+      "default": "proxy"
     },
     {
       "tag": "direct",
